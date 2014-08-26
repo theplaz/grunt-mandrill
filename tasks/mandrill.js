@@ -62,7 +62,7 @@ module.exports = function(grunt){
         });
     }
     */
-  },
+  });
   grunt.registerMultiTask('mandrilltemplate','Add email template to mandrill', function(){
     var done = this.async();
     var options = _.pick(this.data.options,['template_name', 'from_email', 'from_name', 'subject', 'code', 'text', 'publish', 'labels']);
