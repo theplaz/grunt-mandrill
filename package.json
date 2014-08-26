@@ -1,7 +1,7 @@
 {
   "name": "grunt-mandrill",
   "version": "0.0.3",
-  "description": "Grunt Plugin to send email using mandrill",
+  "description": "Grunt Plugin to send email & publish email templates using mandrill",
   "main": "Gruntfile.js",
   "licenses": [
     {

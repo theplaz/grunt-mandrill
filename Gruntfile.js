@@ -15,6 +15,21 @@ module.exports = function(grunt) {
         // src: []//Location of file to use as html template
       }
     }
+
+    mandrilltemplate: {
+      server: {
+          src: ['output/*.html'],
+          filter: 'isFile',
+          options: {
+              key: '',
+              from_email: '',
+              from_name: '',
+              subject: '',
+              text: '',
+              publish: true,
+              labels: ['autogen']
+          }
+      }
   })
   //
   grunt.loadTasks('tasks');
