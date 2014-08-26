@@ -1,4 +1,4 @@
-var mandrill = require('node-mandrill'),
+var mandrill = require('mandrill-api'),
     _        = require('lodash');
 
 
@@ -62,10 +62,10 @@ module.exports = function(grunt){
   grunt.registerMultiTask('mandrilltemplate','Add email template to mandrill', function(){
     var done = this.async();
     var options = _.pick(this.data.options,['template_name', 'from_email', 'from_name', 'subject', 'code', 'text', 'publish', 'labels']);
-    // Setup node-mandrill with the api
-    mandrill = mandrill(this.data.options.key);
+    mandrill_client = new mandrill.Mandrill(this.data.options.key);
     var to = [];
 
+    console.log(this.filesSrc);
     if(this.filesSrc.length > 0){
       _.each(this.filesSrc,function(filepath){
         if(!options.code){
@@ -75,6 +75,7 @@ module.exports = function(grunt){
           basename = path.basename(filepath);
           extension = path.extname(filepath);
           name = basename.substr(0, basename.length - extension.length)
+          console.log(name);
         }
         mandrill_client.templates.add({"name": options.template_name, "from_email": options.from_email, "from_name": options.from_name, "subject": options.subject, "code": options.code, "text": options.text, "publish": options.publish, "labels": options.labels}, function(result) {
             grunt.log.writeln(result);
