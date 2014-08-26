@@ -67,23 +67,22 @@ module.exports = function(grunt){
     var to = [];
 
     if(this.filesSrc.length > 0){
-      _.each(this.filesSrc,function(path){
-        _.each(to, function(recp){
-          if(!options.code){
-            options.code = grunt.file.read(path);
-            console.log(path);
-          }
-          if(!options.template_name){
-            options.template_name = path;
-          }
-          mandrill_client.templates.add({"name": options.template_name, "from_email": options.from_email, "from_name": options.from_name, "subject": options.subject, "code": options.code, "text": options.text, "publish": options.publish, "labels": options.labels}, function(result) {
-              grunt.log.writeln(result);
-              console.log(result);
-          }, function(e) {
-            // Mandrill returns the error as an object with name and message keys
-              grunt.log.writeln('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-              console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-          });
+      _.each(this.filesSrc,function(filepath){
+        if(!options.code){
+          options.code = grunt.file.read(filepath);
+        }
+        if(!options.template_name){
+          basename = path.basename(filepath);
+          extension = path.extname(filepath);
+          name = basename.substr(0, basename.length - extension.length)
+        }
+        mandrill_client.templates.add({"name": options.template_name, "from_email": options.from_email, "from_name": options.from_name, "subject": options.subject, "code": options.code, "text": options.text, "publish": options.publish, "labels": options.labels}, function(result) {
+            grunt.log.writeln(result);
+            console.log(result);
+        }, function(e) {
+          // Mandrill returns the error as an object with name and message keys
+            grunt.log.writeln('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+            console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
         });
       });
     }
