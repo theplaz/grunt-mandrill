@@ -1,5 +1,7 @@
 var mandrill = require('mandrill-api'),
     _        = require('lodash');
+    path     = require('path');
+    cheerio  = require('cheerio');
 
 
 
