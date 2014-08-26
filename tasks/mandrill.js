@@ -7,7 +7,6 @@ var mandrill = require('mandrill-api'),
 
 module.exports = function(grunt){
   grunt.registerMultiTask('mandrill','Send email using mandrill', function(){
-    /*
     var done = this.async();
     var options = _.pick(this.data.options,['sender', 'recipient', 'subject', 'body']);
     // Setup node-mandrill with the api
@@ -26,6 +25,8 @@ module.exports = function(grunt){
           if(!options.body){
             options.body = grunt.file.read(path);
           }
+          //needs to be rewritten to use new API
+          //likely wont work
           mandrill(
             '/messages/send',{
               message:{
@@ -46,6 +47,8 @@ module.exports = function(grunt){
           if(!options.body){
             options.body = grunt.file.read(path);
           }
+          //needs to be rewritten to use new API
+          //likely wont work
           mandrill(
             '/messages/send',{
             message: {
@@ -61,7 +64,6 @@ module.exports = function(grunt){
             });
         });
     }
-    */
   });
   grunt.registerMultiTask('mandrilltemplate','Add email template to mandrill', function(){
     var done = this.async();
