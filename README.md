@@ -51,7 +51,7 @@ entered as an array.
 #### subject
 Type: `String`
 
-The subject of your email
+The subject of your email.  Leave blank to load from the HTML <title> tag.
 
 #### body
 Type: `String`
@@ -81,7 +81,7 @@ module.exports = function(grunt){
       }
     }
   });
-  
+
   grunt.loadNpmTasks('grunt-mandrill');
   });
 ```

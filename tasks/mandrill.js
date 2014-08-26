@@ -70,11 +70,6 @@ module.exports = function(grunt){
 
     if(this.filesSrc.length > 0){
       _.each(this.filesSrc,function(filepath){
-        if(!options.code){
-          code = grunt.file.read(filepath);
-        } else {
-          code = options.code;
-        }
         if(!options.template_name){
           basename = path.basename(filepath);
           extension = path.extname(filepath);
@@ -83,7 +78,20 @@ module.exports = function(grunt){
         } else {
           template_name = options.template_name;
         }
-        mandrill_client.templates.add({"name": template_name, "from_email": options.from_email, "from_name": options.from_name, "subject": options.subject, "code": code, "text": options.text, "publish": options.publish, "labels": options.labels}, function(result) {
+        if(!options.code){
+          code = grunt.file.read(filepath);
+        } else {
+          code = options.code;
+        }
+        if(!options.subject){
+          //load subject line from <title> tag
+          $ = cheerio.load(code);
+          subject = $('title').text();
+          //console.log(subject);
+        } else {
+          subject = options.subject;
+        }
+        mandrill_client.templates.add({"name": template_name, "from_email": options.from_email, "from_name": options.from_name, "subject": subject, "code": code, "text": options.text, "publish": options.publish, "labels": options.labels}, function(result) {
             grunt.log.writeln(result);
             console.log(result);
         }, function(e) {
@@ -96,7 +104,7 @@ module.exports = function(grunt){
             }
         });
         //had some concurrecny problem, so always update
-        mandrill_client.templates.update({"name": template_name, "from_email": options.from_email, "from_name": options.from_name, "subject": options.subject, "code": code, "text": options.text, "publish": options.publish, "labels": options.labels}, function(result) {
+        mandrill_client.templates.update({"name": template_name, "from_email": options.from_email, "from_name": options.from_name, "subject": subject, "code": code, "text": options.text, "publish": options.publish, "labels": options.labels}, function(result) {
            grunt.log.writeln(result);
            console.log(result);
         }, function(e) {
