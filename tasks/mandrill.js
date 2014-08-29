@@ -78,6 +78,8 @@ module.exports = function(grunt){
           basename = path.basename(filepath);
           extension = path.extname(filepath);
           template_name = basename.substr(0, basename.length - extension.length);
+          //locale string is with - (note this changes all)
+          template_name = template_name.replace(/_/g, '-');
           //console.log(template_name);
         } else {
           template_name = options.template_name;
